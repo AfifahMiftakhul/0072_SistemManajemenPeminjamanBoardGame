@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Node.js
+node_modules/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+
+# Android Studio
+.idea/
+.gradle/
+**/build/
+local.properties
+*.iml
