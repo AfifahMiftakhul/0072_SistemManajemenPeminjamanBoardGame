@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const sequelize = require("./config/database");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -24,7 +26,21 @@ app.get("/api/health", (req, res) => {
     });
 });
 
-// Jalankan server
-app.listen(PORT, () => {
-    console.log(`Server BoardGameKu berjalan di port ${PORT}`);
-});
+// Koneksi database dan menjalankan server
+async function startServer() {
+    try {
+        await sequelize.authenticate();
+
+        console.log("Koneksi Supabase berhasil!");
+
+        app.listen(PORT, () => {
+            console.log(`Server BoardGameKu berjalan di port ${PORT}`);
+        });
+
+    } catch (error) {
+        console.error("Koneksi database gagal:", error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
